@@ -1,0 +1,92 @@
+<html>
+<head>
+	<link rel="stylesheet" href="Bootstrap/css/bootstrap.min.css" />
+	<link rel="stylesheet" href="Bootstrap/css/bootstrap-theme.min.css" />
+	<link rel="stylesheet" href="css/main.css" />
+	<script src="jQuery/jquery.js"></script>
+	<script src="js/main.js"></script>
+</head>
+<body>
+	<div id="container">
+		<div id="body" class="container" role="main">
+			<p class="lead">Dice Roller</p>
+			<div class="row">
+				<div id="setBuilder" class="col-lg-6 readyMode">
+					<div id="set1" class="panel panel-default">
+						<div class="panel-heading">
+							Set1
+							<button id="rollDice" class="btn btn-primary pull-right readyMode">Roll Attack</button>
+						</div>
+						<div class="panel-body">
+							<div class="panel panel-default attackRolls">
+								<div class="panel-heading">Attack Rolls</div>
+								<div class="panel-body readyMode">
+									<span id="ardieCount">0</span> 
+									d
+									<span id="ardieType">0</span> 
+									+
+									<span id="ariBonus">0</span>
+								</div>
+								<div class="panel-body editMode">
+									<input id="adieCount" type="text"> 
+									d
+									<input id="adieType" type="text"> 
+									+
+									<input id="aiBonus" type="text">
+								</div>
+							</div>
+
+							<div class="panel panel-default damageRolls">
+								<div class="panel-heading">Damage Rolls</div>
+								<div class="panel-body readyMode">
+									<span id="rdieCount">0</span> 
+									d
+									<span id="rdieType">0</span> 
+									+
+									<span id="riBonus">0</span>
+									+
+									<span id="rtBonus">0</span>
+								</div>
+								<div class="panel-body editMode">
+									<input id="dieCount" type="text"> 
+									d
+									<input id="dieType" type="text"> 
+									+
+									<input id="iBonus" type="text">
+									+
+									<input id="tBonus" type="text">
+								</div>
+							</div>
+						
+							<button id="editDice" class="btn btn-default pull-right readyMode">Edit</button>
+							<button id="saveDice" class="btn btn-success pull-right editMode">Save</button>
+						</div>
+					</div>
+				</div>
+				<div class="col-lg-6">
+					<div id="attackBreakdown" class="panel panel-default">
+						<div class="panel-heading">Attack Breakdown</div>
+						<div class="panel-body">
+						</div>
+					</div>
+					<div id="damageBreakdown" class="panel panel-default">
+						<div class="panel-heading">Damage Breakdown</div>
+						<div class="panel-body">
+							<p class="lead"><span>Roll Breakdown<span><br />
+							<span id="rollBreakdown">0</span>
+							<p class="lead"><span>Bonus Breakdown<span><br />
+							<span id="bonusBreakdown">0</span>
+							</p>
+							<p class="lead"><span>Final Result</span><br />
+							<span id="result" class="lead">0</span></p>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div id="footer">
+			<p>Created by Keith Downie. Source code located <a href="https://github.com/kdownie/dice-roller">here</a> under MIT License.</p>
+		</div>
+	</div>
+</body>
+</html>

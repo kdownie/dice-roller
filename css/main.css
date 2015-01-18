@@ -1,0 +1,66 @@
+.container > p {
+	width: 100%;
+	text-align: center;
+}
+
+#setBuilder.editMode .readyMode {
+	display: none;
+}
+
+#setBuilder.readyMode .editMode, #setBuilder.readyMode .editFields {
+	display: none;
+}
+
+#setBuilder .panel-heading {
+	position: relative;
+}
+
+#setBuilder .panel-heading button {
+	position: absolute;
+	top:0;
+	right: 0;
+	padding: 9px 50px;
+}
+
+#setBuilder input {
+	width: 28px;
+}
+
+#setBuilder #dieCount {
+	text-align: right;
+}
+
+#dieType {
+}
+
+#rollBreakdown {
+	width: 100%;
+}
+
+html, body {
+	margin: 0;
+	padding: 0;
+	height: 100%;
+}
+
+#container {
+	min-height: 100%;
+	position: relative;
+}
+
+#body {
+	padding-bottom: 20px;
+}
+
+#footer {
+	position: absolute;
+	bottom: 0;
+	width: 100%;
+	height: 20px;
+}
+
+#footer p {
+	margin: 0;
+	text-align: center;
+	font-size: 12px;
+}
