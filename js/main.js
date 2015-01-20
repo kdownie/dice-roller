@@ -10,39 +10,7 @@ $(document).ready(function() {
 	})
 
 	$('#rollDice').click(function() {
-		var dieCount = parseInt($('#dieCount').val());
-		var dieType = parseInt($('#dieType').val());
-		var individualBonus = parseInt($('#iBonus').val());
-		var totalBonus = parseInt($('#tBonus').val());
-		
-		var finalResult = 0;
-
-		$('#rollBreakdown').html('');
-		$('#bonusBreakdown').html('+');
-		if (individualBonus != 0) {
-			$('#bonusBreakdown').append('('+individualBonus+'x'+dieCount+')');
-			finalResult += individualBonus*dieCount;
-		}
-
-		for(i = 0; i < dieCount; i++) {
-			thisRoll = Math.ceil(Math.random()*dieType);
-			var addSymbol = '+';
-
-			if (i == dieCount-1) {
-				addSymbol = '';
-			}
-
-			$('#rollBreakdown').append('<span id="roll'+(i+1)+'" class="dieRoll"><span>'+thisRoll+'</span></span>'+addSymbol);
-
-			finalResult += thisRoll;
-		}
-
-		if (totalBonus != 0) {
-			$('#bonusBreakdown').append('+'+totalBonus);
-			finalResult += totalBonus;
-		}
-
-		$('#result').html(''+finalResult);
+		rollAttack();
 	});
 });
 	
@@ -60,4 +28,100 @@ function updateDiceValues() {
 	$('#rdieType').html($('#dieType').val());
 	$('#riBonus').html($('#iBonus').val());
 	$('#rtBonus').html($('#tBonus').val());
+}
+
+var successfulAttacks;
+
+function rollAttack() {
+	successfulAttacks = {};
+
+	var dieCount = parseInt($('#adieCount').val());
+	var dieType = parseInt($('#adieType').val());
+	var individualBonus = parseInt($('#aiBonus').val());
+
+	$('#attackRollContainer').html('');
+
+	for (var i = 1; i <= dieCount; i++) {
+		$('#attackRollContainer').append('<div id="attackRoll'+i+'" class="panel panel-default"></div>');
+
+		var cont = $($('#attackRollContainer').children()[i-1]);
+		cont.append('<div class="panel-heading">Attack '+i+': </div>')
+
+		var attackRoll = Math.ceil(Math.random()*dieType);
+
+		cont.append('<div class="panel-body"><span>'+attackRoll+'</span></div>');
+		cont.children('.panel-heading').append('<span class="attackResult">'+(attackRoll+individualBonus)+'</span>');
+
+		cont.children('.panel-heading').append('<button id="attackHit'+i+'" class="attackHit btn btn-success pull-right">Hit</button>'
+			+'<button id="attackMiss'+i+'" class="attackMiss btn btn-danger pull-right">Miss</button>');
+
+		setDamageEvent('#attackRoll'+i+' #attackHit'+i, '#attackRoll'+i, 'panel-success');
+		setMissEvent('#attackRoll'+i+' #attackMiss'+i, '#attackRoll'+i, 'panel-danger')
+	}
+
+	$('#attackRollContainer').append('<button id="rollDamage" class="btn btn-primary pull-right" onclick="rollDamage()" style="display: none;">Roll Damage</button>');
+}
+
+function setDamageEvent(target, container, add) {
+	$(target).click(function() {
+		$(container).removeClass('panel-default').removeClass('panel-danger').removeClass('panel-success').removeClass('panel-warning').removeClass('panel-info').addClass(add);
+		if ($('#attackRollContainer .panel-default').length == 0) {
+			$('#rollDamage').attr('style','');
+		}
+	})
+}
+
+function setMissEvent(target, container, add) {
+	$(target).click(function() {
+		$(container).removeClass('panel-default').removeClass('panel-danger').removeClass('panel-success').removeClass('panel-warning').removeClass('panel-info').addClass(add);
+		if ($('#attackRollContainer .panel-default').length == 0) {
+			$('#rollDamage').attr('style','');
+		}
+	})
+}
+
+function rollDamage() {
+	$('#rollDamage').attr('style','display:none;');
+
+	var dieCount = parseInt($('#dieCount').val());
+	var dieType = parseInt($('#dieType').val());
+	var individualBonus = parseInt($('#iBonus').val());
+	var totalBonus = parseInt($('#tBonus').val());
+	var addSymbol;
+	
+	var finalResult = 0;
+
+	$('#rollBreakdown').html('');
+	$('#bonusBreakdown').html('');
+
+	for (var j = 1; j <= $('.panel-success .attackHit').length; j++) {
+		if (individualBonus != 0) {
+			$('#bonusBreakdown').append('('+individualBonus);
+			if (dieCount > 1) {
+				$('#bonusBreakdown').append('x'+dieCount);
+			}
+			finalResult += individualBonus*dieCount;
+		}
+
+		for(var i = 1; i <= dieCount; i++) {
+			thisRoll = Math.ceil(Math.random()*dieType);
+			addSymbol = '+';
+
+			if (i == dieCount && j == $('.panel-success .attackHit').length) {
+				addSymbol = ' ';
+			}
+
+			$('#rollBreakdown').append('<span id="roll'+i+'" class="dieRoll"><span>'+thisRoll+'</span></span>'+addSymbol);
+
+			finalResult += thisRoll;
+		}
+
+		if (totalBonus != 0) {
+			$('#bonusBreakdown').append('+'+totalBonus);
+			finalResult += totalBonus;
+		}
+		$('#bonusBreakdown').append(')'+addSymbol);
+	}
+
+	$('#result').html(''+finalResult);
 }

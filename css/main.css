@@ -30,7 +30,36 @@
 	text-align: right;
 }
 
+
 #dieType {
+}
+
+#rtBonus {
+	background-color: #e8e8e8;
+}
+
+#resultsContainer .panel-heading {
+	position: relative;
+}
+
+#resultsContainer .panel-heading button {
+	position: absolute;
+	top:0;
+	right: 0;
+	padding: 9px 40px;
+}
+
+#resultsContainer .panel-heading .attackHit {
+	right: 110px;
+	padding: 9px 46px;
+}
+
+#resultsContainer .attackResult {
+	font-weight: bold;
+	font-size: 20px;
+	left: 78px;
+	top: 5px;
+	position: absolute;
 }
 
 #rollBreakdown {
