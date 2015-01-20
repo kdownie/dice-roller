@@ -10,7 +10,7 @@ $(document).ready(function() {
 	})
 
 	$('#rollDice').click(function() {
-		rollAttack();
+		rollAttack($(this).parents('.set').attr('id'));
 	});
 });
 	
@@ -30,14 +30,14 @@ function updateDiceValues() {
 	$('#rtBonus').html($('#tBonus').val());
 }
 
-var successfulAttacks;
+var currentSet;
 
-function rollAttack() {
-	successfulAttacks = {};
+function rollAttack(set) {
+	currentSet = set;
 
-	var dieCount = parseInt($('#adieCount').val());
-	var dieType = parseInt($('#adieType').val());
-	var individualBonus = parseInt($('#aiBonus').val());
+	var dieCount = parseInt($('#'+set+' #adieCount').val());
+	var dieType = parseInt($('#'+set+' #adieType').val());
+	var individualBonus = parseInt($('#'+set+' #aiBonus').val());
 
 	$('#attackRollContainer').html('');
 
@@ -83,10 +83,10 @@ function setMissEvent(target, container, add) {
 function rollDamage() {
 	$('#rollDamage').attr('style','display:none;');
 
-	var dieCount = parseInt($('#dieCount').val());
-	var dieType = parseInt($('#dieType').val());
-	var individualBonus = parseInt($('#iBonus').val());
-	var totalBonus = parseInt($('#tBonus').val());
+	var dieCount = parseInt($('#'+currentSet+' #dieCount').val());
+	var dieType = parseInt($('#'+currentSet+' #dieType').val());
+	var individualBonus = parseInt($('#'+currentSet+' #iBonus').val());
+	var totalBonus = parseInt($('#'+currentSet+' #tBonus').val());
 	var addSymbol;
 	
 	var finalResult = 0;
@@ -103,17 +103,22 @@ function rollDamage() {
 			finalResult += individualBonus*dieCount;
 		}
 
+		$('#rollBreakdown').append('(');
 		for(var i = 1; i <= dieCount; i++) {
 			thisRoll = Math.ceil(Math.random()*dieType);
 			addSymbol = '+';
 
-			if (i == dieCount && j == $('.panel-success .attackHit').length) {
-				addSymbol = ' ';
+			if (i == dieCount) {
+				addSymbol = '';
 			}
 
 			$('#rollBreakdown').append('<span id="roll'+i+'" class="dieRoll"><span>'+thisRoll+'</span></span>'+addSymbol);
 
 			finalResult += thisRoll;
+		}
+		$('#rollBreakdown').append(')');
+		if (j < $('.panel-success .attackHit').length) {
+			$('#rollBreakdown').append('+');
 		}
 
 		if (totalBonus != 0) {
@@ -121,6 +126,9 @@ function rollDamage() {
 			finalResult += totalBonus;
 		}
 		$('#bonusBreakdown').append(')'+addSymbol);
+		if (j < $('.panel-success .attackHit').length) {
+			$('#bonusBreakdown').append('+');
+		}
 	}
 
 	$('#result').html(''+finalResult);
