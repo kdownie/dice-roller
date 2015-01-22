@@ -5,29 +5,46 @@ $(document).ready(function() {
 	})
 
 	$('#saveDice').click(function() {
-		updateDiceValues();
+		updateDiceValues($(this).parents('.set').attr('id'));
 		$('#setBuilder').removeClass('editMode').addClass('readyMode');
 	})
 
 	$('#rollDice').click(function() {
 		rollAttack($(this).parents('.set').attr('id'));
 	});
+
+	$('#addDice').click(function() {
+		var nextSet = $(this).parents('.set').find('.attackDie').length+1;
+		$(this).parents('.set').find('.attackRolls').append('<div class="attackDie'+nextSet+' attackDie">'
+			+$(this).parents('.set').find('.attackDie1').html()
+			+'<div>');
+		$(this).parents('.set').find('.damageRolls').append('<div class="damageDie'+nextSet+' damageDie">'
+			+$(this).parents('.set').find('.damageDie1').html()
+			+'<div>');
+	});
 });
 	
 
 function initialize() {
-	updateDiceValues();
+	$('.set').each(function() {
+		updateDiceValues($(this).attr('id'));
+	})
+	
 }
 
-function updateDiceValues() {
-	$('#ardieCount').html($('#adieCount').val());
-	$('#ardieType').html($('#adieType').val());
-	$('#ariBonus').html($('#aiBonus').val());
-
-	$('#rdieCount').html($('#dieCount').val());
-	$('#rdieType').html($('#dieType').val());
-	$('#riBonus').html($('#iBonus').val());
-	$('#rtBonus').html($('#tBonus').val());
+function updateDiceValues(set) {
+	$('#'+set+' .attackDie').each(function() {
+		$(this).find('#ardieCount').html($(this).find('#adieCount').val());
+		$(this).find('#ardieType').html($(this).find('#adieType').val());
+		$(this).find('#ariBonus').html($(this).find('#aiBonus').val());
+	});
+	
+	$('#'+set+' .damageDie').each(function() {
+		$(this).find('#rdieCount').html($(this).find('#dieCount').val());
+		$(this).find('#rdieType').html($(this).find('#dieType').val());
+		$(this).find('#riBonus').html($(this).find('#iBonus').val());
+		$(this).find('#rtBonus').html($(this).find('#tBonus').val());
+	});
 }
 
 var currentSet;

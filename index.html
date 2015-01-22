@@ -17,49 +17,54 @@
 							Set1
 							<button id="rollDice" class="btn btn-primary pull-right readyMode">Roll Attack</button>
 						</div>
-						<div class="panel-body">
-							<div class="panel panel-default attackRolls">
-								<div class="panel-heading">Attack Rolls</div>
-								<div class="panel-body readyMode">
-									<span id="ardieCount">0</span> 
-									d
-									<span id="ardieType">0</span> 
-									+
-									<span id="ariBonus">0</span>
+						<div class="panel-body dieContainer">
+								<div class="panel panel-default attackRolls col-lg-6">
+									<div class="panel-heading">Attack Rolls</div>
+									<div class="attackDie1 attackDie">
+										<div class="panel-body readyMode">
+											<span id="ardieCount">0</span> 
+											d
+											<span id="ardieType">0</span> 
+											+
+											<span id="ariBonus">0</span>
+										</div>
+										<div class="panel-body editMode">
+											<input id="adieCount" type="text"> 
+											d
+											<input id="adieType" type="text"> 
+											+
+											<input id="aiBonus" type="text">
+										</div>
+									</div>
 								</div>
-								<div class="panel-body editMode">
-									<input id="adieCount" type="text"> 
-									d
-									<input id="adieType" type="text"> 
-									+
-									<input id="aiBonus" type="text">
-								</div>
-							</div>
 
-							<div class="panel panel-default damageRolls">
-								<div class="panel-heading">Damage Rolls</div>
-								<div class="panel-body readyMode">
-									<span id="rdieCount">0</span> 
-									d
-									<span id="rdieType">0</span> 
-									+
-									<span id="riBonus">0</span>
-									+
-									<span id="rtBonus">0</span>
+								<div class="panel panel-default damageRolls col-lg-6">
+									<div class="panel-heading">Damage Rolls</div>
+									<div class="damageDie1 damageDie">
+										<div class="panel-body readyMode">
+											<span id="rdieCount">0</span> 
+											d
+											<span id="rdieType">0</span> 
+											+
+											<span id="riBonus">0</span>
+											+
+											<span id="rtBonus">0</span>
+										</div>
+										<div class="panel-body editMode">
+											<input id="dieCount" type="text"> 
+											d
+											<input id="dieType" type="text"> 
+											+
+											<input id="iBonus" type="text">
+											+
+											<input id="tBonus" type="text">
+										</div>
+									</div>
 								</div>
-								<div class="panel-body editMode">
-									<input id="dieCount" type="text"> 
-									d
-									<input id="dieType" type="text"> 
-									+
-									<input id="iBonus" type="text">
-									+
-									<input id="tBonus" type="text">
-								</div>
-							</div>
 						
 							<button id="editDice" class="btn btn-default pull-right readyMode">Edit</button>
 							<button id="saveDice" class="btn btn-success pull-right editMode">Save</button>
+							<button id="addDice" class="btn btn-default pull-right editMode">Add Die</button>
 						</div>
 					</div>
 				</div>

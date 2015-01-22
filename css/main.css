@@ -22,6 +22,10 @@
 	padding: 9px 50px;
 }
 
+#setBuilder button {
+	margin-left: 10px;
+}
+
 #setBuilder input {
 	width: 28px;
 }
@@ -30,6 +34,9 @@
 	text-align: right;
 }
 
+.set .panel {
+	padding: 0;
+}
 
 #dieType {
 }
