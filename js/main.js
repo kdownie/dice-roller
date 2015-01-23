@@ -52,29 +52,36 @@ var currentSet;
 function rollAttack(set) {
 	currentSet = set;
 
-	var dieCount = parseInt($('#'+set+' #adieCount').val());
-	var dieType = parseInt($('#'+set+' #adieType').val());
-	var individualBonus = parseInt($('#'+set+' #aiBonus').val());
-
 	$('#attackRollContainer').html('');
+	
+	var j = 1;
+	var k = 1;
+	$('#'+set+' .attackDie').each(function() {
+		var dieCount = parseInt($(this).find('#adieCount').val());
+		var dieType = parseInt($(this).find('#adieType').val());
+		var individualBonus = parseInt($(this).find('#aiBonus').val());
 
-	for (var i = 1; i <= dieCount; i++) {
-		$('#attackRollContainer').append('<div id="attackRoll'+i+'" class="panel panel-default"></div>');
+		for (var i = 1; i <= dieCount; i++) {
+			$('#attackRollContainer').append('<div id="attackRoll'+j+'" class="panel panel-default" data-damageType="'+k+'"></div>');
 
-		var cont = $($('#attackRollContainer').children()[i-1]);
-		cont.append('<div class="panel-heading">Attack '+i+': </div>')
+			var cont = $($('#attackRollContainer').children()[j-1]);
+			cont.append('<div class="panel-heading">Attack '+j+': </div>')
 
-		var attackRoll = Math.ceil(Math.random()*dieType);
+			var attackRoll = Math.ceil(Math.random()*dieType);
 
-		cont.append('<div class="panel-body"><span>'+attackRoll+'</span></div>');
-		cont.children('.panel-heading').append('<span class="attackResult">'+(attackRoll+individualBonus)+'</span>');
+			cont.append('<div class="panel-body"><span>'+attackRoll+'+'+individualBonus+' (d'+dieType+')</span></div>');
+			cont.children('.panel-heading').append('<span class="attackResult">'+(attackRoll+individualBonus)+'</span>');
 
-		cont.children('.panel-heading').append('<button id="attackHit'+i+'" class="attackHit btn btn-success pull-right">Hit</button>'
-			+'<button id="attackMiss'+i+'" class="attackMiss btn btn-danger pull-right">Miss</button>');
+			cont.children('.panel-heading').append('<button id="attackHit'+j+'" class="attackHit btn btn-success pull-right">Hit</button>'
+				+'<button id="attackMiss'+j+'" class="attackMiss btn btn-danger pull-right">Miss</button>');
 
-		setDamageEvent('#attackRoll'+i+' #attackHit'+i, '#attackRoll'+i, 'panel-success');
-		setMissEvent('#attackRoll'+i+' #attackMiss'+i, '#attackRoll'+i, 'panel-danger')
-	}
+			setDamageEvent('#attackRoll'+j+' #attackHit'+j, '#attackRoll'+j, 'panel-success');
+			setMissEvent('#attackRoll'+j+' #attackMiss'+j, '#attackRoll'+j, 'panel-danger')
+			j++;
+		}
+		k++;
+	});
+
 
 	$('#attackRollContainer').append('<button id="rollDamage" class="btn btn-primary pull-right" onclick="rollDamage()" style="display: none;">Roll Damage</button>');
 }
@@ -100,10 +107,10 @@ function setMissEvent(target, container, add) {
 function rollDamage() {
 	$('#rollDamage').attr('style','display:none;');
 
-	var dieCount = parseInt($('#'+currentSet+' #dieCount').val());
-	var dieType = parseInt($('#'+currentSet+' #dieType').val());
-	var individualBonus = parseInt($('#'+currentSet+' #iBonus').val());
-	var totalBonus = parseInt($('#'+currentSet+' #tBonus').val());
+	var dieCount;
+	var dieType;
+	var individualBonus;
+	var totalBonus;
 	var addSymbol;
 	
 	var finalResult = 0;
@@ -111,7 +118,14 @@ function rollDamage() {
 	$('#rollBreakdown').html('');
 	$('#bonusBreakdown').html('');
 
-	for (var j = 1; j <= $('.panel-success .attackHit').length; j++) {
+	var j = 1;
+	$('.panel-success .attackHit').each(function() {
+		var damageType = $(this).parents('.panel').attr('data-damagetype');
+		dieCount = parseInt($('#'+currentSet+' .damageDie'+damageType+' #dieCount').val());
+		dieType = parseInt($('#'+currentSet+' .damageDie'+damageType+' #dieType').val());
+		individualBonus = parseInt($('#'+currentSet+' .damageDie'+damageType+' #iBonus').val());
+		totalBonus = parseInt($('#'+currentSet+' .damageDie'+damageType+' #tBonus').val());
+			
 		if (individualBonus != 0) {
 			$('#bonusBreakdown').append('('+individualBonus);
 			if (dieCount > 1) {
@@ -146,7 +160,8 @@ function rollDamage() {
 		if (j < $('.panel-success .attackHit').length) {
 			$('#bonusBreakdown').append('+');
 		}
-	}
+		j++;
+	});
 
 	$('#result').html(''+finalResult);
 }
