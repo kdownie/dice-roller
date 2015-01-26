@@ -1,10 +1,23 @@
 <html>
 <head>
+	<title>Dice Roller</title>
 	<link rel="stylesheet" href="Bootstrap/css/bootstrap.min.css" />
 	<link rel="stylesheet" href="Bootstrap/css/bootstrap-theme.min.css" />
 	<link rel="stylesheet" href="css/main.css" />
 	<script src="jQuery/jquery.js"></script>
+	<script src="jQuery/jquery.cookie.js"></script>
 	<script src="js/main.js"></script>
+
+	<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-58894833-1', 'auto');
+  ga('send', 'pageview');
+
+</script>
 </head>
 <body>
 	<div id="container">
@@ -20,46 +33,10 @@
 						<div class="panel-body dieContainer">
 								<div class="panel panel-default attackRolls col-lg-6">
 									<div class="panel-heading">Attack Rolls</div>
-									<div class="attackDie1 attackDie">
-										<div class="panel-body readyMode">
-											<span id="ardieCount">0</span> 
-											d
-											<span id="ardieType">0</span> 
-											+
-											<span id="ariBonus">0</span>
-										</div>
-										<div class="panel-body editMode">
-											<input id="adieCount" type="text"> 
-											d
-											<input id="adieType" type="text"> 
-											+
-											<input id="aiBonus" type="text">
-										</div>
-									</div>
 								</div>
 
 								<div class="panel panel-default damageRolls col-lg-6">
 									<div class="panel-heading">Damage Rolls</div>
-									<div class="damageDie1 damageDie">
-										<div class="panel-body readyMode">
-											<span id="rdieCount">0</span> 
-											d
-											<span id="rdieType">0</span> 
-											+
-											<span id="riBonus">0</span>
-											+
-											<span id="rtBonus">0</span>
-										</div>
-										<div class="panel-body editMode">
-											<input id="dieCount" type="text"> 
-											d
-											<input id="dieType" type="text"> 
-											+
-											<input id="iBonus" type="text">
-											+
-											<input id="tBonus" type="text">
-										</div>
-									</div>
 								</div>
 						
 							<button id="editDice" class="btn btn-default pull-right readyMode">Edit</button>
@@ -73,13 +50,15 @@
 						</div>
 						<div class="panel-body">
 							<p>Added support for multiple types of die in a set.</p>
+							<p>The site now uses browser cookies to remember what die were set up and restores them on refresh.</p>
 						</div>
 						<div class="panel-heading">
 							What's Next
 						</div>
 						<div class="panel-body">
-							<p>Using cookies to save the die sets that are set up.</p>
+							<p>Ability to delete die</p>
 							<p>Support for critical hits.</p>
+							<p>Being able to roll only damage (for spells) or only attacks (initiative, saving throw, etc).
 						</div>
 					</div>
 				</div>
