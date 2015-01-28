@@ -9,7 +9,7 @@ $(document).ready(function() {
 		var builtCookie = "";
 
 		var i = 1;
-		$($(this).parents('.set').find('.attackDie')).each(function() {
+		$($(this).parents('.set').find('.dieSet')).each(function() {
 			if (i > 1) {
 				builtCookie += ';';
 			}
@@ -17,11 +17,10 @@ $(document).ready(function() {
 				+$(this).find('#adieType').val()+','
 				+$(this).find('#aiBonus').val()+'-';
 
-			var damageSet = $(this).parents('.set').find('.damageDie'+i);
-			builtCookie += $(damageSet).find('#dieCount').val()+','
-				+damageSet.find('#dieType').val()+','
-				+damageSet.find('#iBonus').val()+','
-				+damageSet.find('#tBonus').val();
+			builtCookie += $(this).find('#dieCount').val()+','
+				+$(this).find('#dieType').val()+','
+				+$(this).find('#iBonus').val()+','
+				+$(this).find('#tBonus').val();
 			i++;
 		});
 
@@ -36,7 +35,7 @@ $(document).ready(function() {
 	});
 
 	$('#addDice').click(function() {
-		addDie($(this).parents('.set').attr('id').charAt(3), 0, 0, 0, 0, 0, 0, 0);
+		addDie($(this).parents('.set').attr('id').substring(3), 0, 0, 0, 0, 0, 0, 0);
 	});
 });
 	
@@ -49,48 +48,52 @@ function initialize() {
 			}
 			break;
 		}
-		var cookie = $.cookie('set'+i);
-		var die = cookie.split(';');
-		var j = 1;
-		$.each(die, function() {
-			var aDie = (die[j-1].split('-')[0]).split(',');
-			var dDie = (die[j-1].split('-')[1]).split(',');
-			
-			addDie(i, aDie[0], aDie[1], aDie[2], dDie[0], dDie[1], dDie[2], dDie[3]);
-			j++;
-		});
+		try {
+			var cookie = $.cookie('set'+i);
+
+			var die = cookie.split(';');
+			var j = 1;
+			$.each(die, function() {
+				var aDie = (die[j-1].split('-')[0]).split(',');
+				var dDie = (die[j-1].split('-')[1]).split(',');
+				
+				addDie(i, aDie[0], aDie[1], aDie[2], dDie[0], dDie[1], dDie[2], dDie[3]);
+				j++;
+			});
+		}
+		catch(err) {
+			console.log(err.message);
+		}
 	}
-	/*$('.set').each(function() {
-		updateDiceValues($(this).attr('id'));
-	});*/
 }
 
 function addDie(set, aCount, aType, aBonus, dCount, dType, diBonus, dtBonus) {
 	var dieCount = $('.attackDie').length+1;
+	$('#set'+set+' .dieContainer').append('<div class="clearfix panel panel-default dieSet dieSet'+dieCount+'"></div>');
 
-	$('#set'+set+' .attackRolls').append(''
+	$('#set'+set+' .dieSet'+dieCount).append(''
 		+'<div class="attackDie'+dieCount+' attackDie">'
-			+'<div class="panel-body readyMode">'
+			+'<div class="panel-body col-lg-6 readyMode">'
 				+'<span id="ardieCount">'+aCount+'</span> d '
 				+'<span id="ardieType">'+aType+'</span> + '
 				+'<span id="ariBonus">'+aBonus+'</span>'
 			+'</div>'
-			+'<div class="panel-body editMode">'
+			+'<div class="panel-body col-lg-6 editMode">'
 				+'<input id="adieCount" type="text"> d '
 				+'<input id="adieType" type="text"> + '
 				+'<input id="aiBonus" type="text">'
 			+'</div>'
 		+'</div>');
 
-	$('#set'+set+' .damageRolls').append(''
+	$('#set'+set+' .dieSet'+dieCount).append(''
 		+'<div class="damageDie'+dieCount+' damageDie">'
-			+'<div class="panel-body readyMode">'
+			+'<div class="panel-body col-lg-6 readyMode">'
 				+'<span id="rdieCount">'+dCount+'</span> d '
 				+'<span id="rdieType">'+dType+'</span> + '
 				+'<span id="riBonus">'+diBonus+'</span> + '
 				+'<span id="rtBonus">'+dtBonus+'</span>'
 			+'</div>'
-			+'<div class="panel-body editMode">'
+			+'<div class="panel-body col-lg-6 editMode">'
 				+'<input id="dieCount" type="text"> d '
 				+'<input id="dieType" type="text"> + '
 				+'<input id="iBonus" type="text"> + '
@@ -98,6 +101,11 @@ function addDie(set, aCount, aType, aBonus, dCount, dType, diBonus, dtBonus) {
 			+'</div>'
 		+'</div>');
 
+	$('#set'+set+' .dieSet'+dieCount).append('<button type="button" id="close'+dieCount+'"" class="editMode close" aria-label="Close"><span aria-hidden="true">&times;</span></button>');
+
+	$('#set'+set+' .dieSet'+dieCount+' .close').click(function() {
+		$('.dieSet'+$(this).attr('id').substring(5)).remove();
+	});
 
 	$('#set'+set+' .attackDie'+dieCount+' #adieCount').val(aCount);
 	$('#set'+set+' .attackDie'+dieCount+' #adieType').val(aType);

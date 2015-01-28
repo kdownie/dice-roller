@@ -13,6 +13,7 @@
 
 #setBuilder .panel-heading {
 	position: relative;
+	z-index: 10;
 }
 
 #setBuilder .panel-heading button {
@@ -36,6 +37,18 @@
 
 .set .panel {
 	padding: 0;
+}
+
+.dieContainer .panel {
+	margin: 0;
+	position: relative;
+	border-radius: 0;
+}
+
+.dieContainer .close {
+	position: absolute;
+	bottom: 13px;
+	right: 10px;
 }
 
 #dieType {
