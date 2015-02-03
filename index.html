@@ -6,6 +6,7 @@
 	<link rel="stylesheet" href="css/main.css" />
 	<script src="jQuery/jquery.js"></script>
 	<script src="jQuery/jquery.cookie.js"></script>
+	<script src="Bootstrap/js/bootstrap.min.js"></script>
 	<script src="js/main.js"></script>
 
 	<script>
@@ -24,39 +25,11 @@
 		<div id="body" class="container" role="main">
 			<p class="lead">Dice Roller</p>
 			<div class="row">
-				<div id="setBuilder" class="col-lg-6 readyMode">
-					<div id="set1" class="set panel panel-default">
-						<div class="panel-heading">
-							Set1
-							<button id="rollDice" class="btn btn-primary pull-right readyMode">Roll Attack</button>
-						</div>
-						<div class="panel-body setContainer">
-							<div class="dieContainer panel panel-default col-lg-12">
-								<div class="panel-heading col-lg-6">Attack Rolls</div>
-								<div class="panel-heading col-lg-6">Damage Rolls</div>
-							</div>
-							
-							<button id="editDice" class="btn btn-default pull-right readyMode">Edit</button>
-							<button id="saveDice" class="btn btn-success pull-right editMode">Save</button>
-							<button id="addDice" class="btn btn-default pull-right editMode">Add Die</button>
-						</div>
+				<div id="setBuilder" class="col-lg-6">
+					<div class="sets">
 					</div>
-					<div class="panel panel-default">
-						<div class="panel-heading">
-							Updates
-						</div>
-						<div class="panel-body">
-							<p>Added support for deleting an attack/damage pair in the Edit screen.</p>
-							<p>The site now uses browser cookies to remember what die were set up and restores them on refresh.</p>
-						</div>
-						<div class="panel-heading">
-							What's Next
-						</div>
-						<div class="panel-body">
-							<p>Ability to create multiple sets of dice.</p>
-							<p>Support for critical hits.</p>
-							<p>Being able to roll only damage (for spells) or only attacks (initiative, saving throw, etc).
-						</div>
+					<div class="clearfix setOptions">
+						<button id="addSet" class="btn btn-primary pull-right">Add Set</button>
 					</div>
 				</div>
 				<div id="resultsContainer" class="col-lg-6">
@@ -78,6 +51,27 @@
 							</p>
 							<p class="lead"><span>Final Damage</span><br />
 							<span id="result" class="lead">0</span></p>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-lg-12">
+					<div class="panel panel-default">
+						<div class="panel-heading">
+							Updates
+						</div>
+						<div class="panel-body">
+							<p>Multiple sets can now be created and rolled independently.</p>
+							<p>Set panels are now collapsable</p>
+						</div>
+						<div class="panel-heading">
+							What's Next
+						</div>
+						<div class="panel-body">
+							<p>Ability to delete sets of dice.</p>
+							<p>Support for critical hits.</p>
+							<p>Being able to roll only damage (for spells) or only attacks (initiative, saving throw, etc).</p>
 						</div>
 					</div>
 				</div>

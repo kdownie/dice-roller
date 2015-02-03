@@ -3,11 +3,11 @@
 	text-align: center;
 }
 
-#setBuilder.editMode .readyMode {
+#setBuilder .editMode .readyMode {
 	display: none;
 }
 
-#setBuilder.readyMode .editMode, #setBuilder.readyMode .editFields {
+#setBuilder .readyMode .editMode, #setBuilder .readyMode .editFields {
 	display: none;
 }
 
@@ -21,6 +21,15 @@
 	top:0;
 	right: 0;
 	padding: 9px 50px;
+	z-index: 5;
+}
+
+#setBuilder .panel-heading .collapser {
+	width: 100%;
+	height: 100%;
+	position: absolute;
+	top: 0;
+	left: 0;
 }
 
 #setBuilder button {
@@ -45,10 +54,43 @@
 	border-radius: 0;
 }
 
-.dieContainer .close {
+.dieContainer .dieSet .modBox {
+	width: 80px;
 	position: absolute;
-	bottom: 13px;
-	right: 10px;
+	padding-top: 13px;
+	right: 0;
+	display: none;
+	z-index: 10;
+}
+
+.dieContainer .dieSet:hover .modBox {
+	display: block;
+}
+
+#setBuilder .dieContainer .dieSet .modBox button {
+	margin: 0;
+}
+
+#setBuilder .dieContainer .dieSet .modBox .close {
+	margin: 4px 10px 0 0;
+}
+
+#setBuilder .dieContainer .dieSet .modBox .editAdvanced {
+	padding: 6px 8px;
+	margin-left: 15px;
+}
+
+.dieContainer .dieSet .modPanel {
+	padding-top: 0;
+	display: none;
+}
+
+.dieContainer .dieSet .modPanel.active {
+	display: block;
+}
+
+#setBuilder .modPanel button {
+	margin-left: 0;
 }
 
 #dieType {
@@ -67,6 +109,10 @@
 	top:0;
 	right: 0;
 	padding: 9px 40px;
+}
+
+.setOptions {
+	margin: 0 0 15px 0;
 }
 
 #resultsContainer .panel-heading .attackHit {
