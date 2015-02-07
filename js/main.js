@@ -124,12 +124,12 @@ function addSet(setL, collapsed) {
 
 function deleteSet(set) {
 	$('#set'+set).remove();
-
 	$.removeCookie('set'+set);
 
 	var i = set+1;
 	var nextCookie = $.cookie('set'+i);
 	while (nextCookie != undefined) {
+		$.cookie('set'+(i-1), nextCookie);
 		$.removeCookie('set'+i);
 
 		i++;
