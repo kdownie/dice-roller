@@ -59,6 +59,7 @@ function addSet(setL, collapsed) {
 			+'<div class="panel-heading">'
 				+'Set'+setL
 				+'<button id="rollDice" class="btn btn-primary pull-right readyMode">Roll Attack</button>'
+				+'<div class="setActions editMode"><button id="deleteSet1" class="close" aria-label="close" type="button"><span aria-hidden="true">&times;</span></button></div>'
 				+'<a'+cclass+' href="#" data-toggle="collapse" data-target="#set'+setL+'Collapse" aria-controls="set'+setL+'Collapse" aria-expanded="true"><div class="collapser">'
 				+'<span class="glyphicon glyphicon-chevron-right"></span><span class="glyphicon glyphicon-chevron-down"></span>'
 				+'</div></a>'
@@ -113,6 +114,27 @@ function addSet(setL, collapsed) {
 	$('#set'+setL+' #addDice').click(function() {
 		addDie($(this).parents('.set').attr('id').substring(3), 0, 0, 0, 0, 0, 0, 0);
 	});
+
+	$('#set'+setL+' .setActions .close').click(function() {
+		deleteSet(setL);
+	});
+}
+
+function deleteSet(set) {
+	$('#set'+set).remove();
+
+	$.removeCookie('set'+set);
+
+	var i = set+1;
+	var nextCookie = $.cookie('set'+i);
+	while (nextCookie != undefined) {
+		$.removeCookie('set'+i);
+
+		i++;
+		nextCookie = $.cookie('set'+i);
+	}
+
+	$.cookie('setCount', parseInt($.cookie('setCount'))-1);
 }
 
 function addDie(set, aCount, aType, aBonus, dCount, dType, diBonus, dtBonus) {
@@ -155,7 +177,7 @@ function addDie(set, aCount, aType, aBonus, dCount, dType, diBonus, dtBonus) {
 		+'</div>');
 
 	$('#set'+set+' .dieSet'+dieCount+' .modBox').append(''
-		+'<button type="button" id="close'+dieCount+'"" class="close" aria-label="Close"><span aria-hidden="true">&times;</span></button>'
+		+'<button type="button" id="close'+dieCount+'" class="close" aria-label="Close"><span aria-hidden="true">&times;</span></button>'
 		+'<button type="button" class="btn btn-default editAdvanced"><span class="glyphicon glyphicon-cog"></span></button>');
 
 	$('#set'+set+' .dieSet'+dieCount+' .editAdvanced').click(function() {
