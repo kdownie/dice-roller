@@ -32,6 +32,29 @@
 	left: 0;
 }
 
+#setBuilder .panel-heading a {
+	text-decoration: none;
+}
+
+#setBuilder .panel-heading .collapser .glyphicon {
+	color: #333;
+	position: absolute;
+	top: 13px;
+	right: 180px;
+}
+
+#setBuilder .panel-heading .collapser .glyphicon-chevron-right {
+	display: none;
+}
+
+#setBuilder .panel-heading .collapsed .collapser .glyphicon-chevron-right {
+	display: block;
+}
+
+#setBuilder .panel-heading .collapsed .collapser .glyphicon-chevron-down {
+	display: none;
+}
+
 #setBuilder button {
 	margin-left: 10px;
 }
@@ -130,6 +153,18 @@
 
 #rollBreakdown {
 	width: 100%;
+}
+
+#set1Collapse {
+	padding: 15px 15px 10px;
+}
+
+#set1Collapse > .panel {
+	margin-bottom: 10px;
+}
+
+.set {
+	margin-bottom: 15px;
 }
 
 html, body {

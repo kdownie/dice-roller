@@ -40,22 +40,28 @@ function initialize() {
 			}
 		}
 	}
+
 	if (setCount == 1) {
 		$('#set1Collapse').addClass('in');
+		$('.collapsed').removeClass('collapsed');
 	}
 }
 
 function addSet(setL, collapsed) {
 	var text = '';
+	var cclass = ' class="collapsed"';
 	if (collapsed == false) {
 		text = ' in';
+		cclass = '';
 	}
 	$('#setBuilder .sets').append(''
 		+'<div id="set'+setL+'" class="set panel panel-default readyMode">'
 			+'<div class="panel-heading">'
 				+'Set'+setL
 				+'<button id="rollDice" class="btn btn-primary pull-right readyMode">Roll Attack</button>'
-				+'<a href="#" data-toggle="collapse" data-target="#set'+setL+'Collapse" aria-controls="set'+setL+'Collapse" aria-expanded="true"><div class="collapser"></div></a>'
+				+'<a'+cclass+' href="#" data-toggle="collapse" data-target="#set'+setL+'Collapse" aria-controls="set'+setL+'Collapse" aria-expanded="true"><div class="collapser">'
+				+'<span class="glyphicon glyphicon-chevron-right"></span><span class="glyphicon glyphicon-chevron-down"></span>'
+				+'</div></a>'
 			+'</div>'
 			+'<div id="set'+setL+'Collapse" class="panel-body setContainer collapse'+text+'">'
 				+'<div class="dieContainer panel panel-default col-lg-12">'
