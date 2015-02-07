@@ -50,12 +50,14 @@ function initialize() {
 function addSet(setL, collapsed) {
 	var text = '';
 	var cclass = ' class="collapsed"';
+	var editMode = 'readyMode';
 	if (collapsed == false) {
 		text = ' in';
 		cclass = '';
+		editMode = 'editMode'
 	}
 	$('#setBuilder .sets').append(''
-		+'<div id="set'+setL+'" class="set panel panel-default readyMode">'
+		+'<div id="set'+setL+'" class="set panel panel-default '+editMode+'">'
 			+'<div class="panel-heading">'
 				+'Set'+setL
 				+'<button id="rollDice" class="btn btn-primary pull-right readyMode">Roll Attack</button>'
