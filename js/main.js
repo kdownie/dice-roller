@@ -24,7 +24,11 @@ function initialize() {
 				try {
 					var cookie = $.cookie('set'+i);
 
-					var die = cookie.split(';');
+					var sections = cookie.split('`');
+					$('#set'+i+' .setTitle').html(sections[0]);
+					$('#set'+i+' .setTitleEdit').val(sections[0]);
+
+					var die = sections[1].split(';');
 					var j = 1;
 					$.each(die, function() {
 						var aDie = (die[j-1].split('-')[0]).split(',');
@@ -49,7 +53,7 @@ function initialize() {
 
 function addSet(setL, collapsed) {
 	var text = '';
-	var cclass = ' class="collapsed"';
+	var cclass = ' collapsed';
 	var editMode = 'readyMode';
 	if (collapsed == false) {
 		text = ' in';
@@ -59,10 +63,11 @@ function addSet(setL, collapsed) {
 	$('#setBuilder .sets').append(''
 		+'<div id="set'+setL+'" class="set panel panel-default '+editMode+'">'
 			+'<div class="panel-heading">'
-				+'Set'+setL
+				+'<span class="setTitle readyMode">Set'+setL+'</span>'
+				+'<input class="setTitleEdit editMode" type="text"></input>'
 				+'<button id="rollDice" class="btn btn-primary pull-right readyMode">Roll Attack</button>'
 				+'<div class="setActions editMode"><button id="deleteSet1" class="close" aria-label="close" type="button"><span aria-hidden="true">&times;</span></button></div>'
-				+'<a'+cclass+' href="#" data-toggle="collapse" data-target="#set'+setL+'Collapse" aria-controls="set'+setL+'Collapse" aria-expanded="true"><div class="collapser">'
+				+'<a class="readyMode'+cclass+'" href="#" data-toggle="collapse" data-target="#set'+setL+'Collapse" aria-controls="set'+setL+'Collapse" aria-expanded="true"><div class="collapser">'
 				+'<span class="glyphicon glyphicon-chevron-right"></span><span class="glyphicon glyphicon-chevron-down"></span>'
 				+'</div></a>'
 			+'</div>'
@@ -77,14 +82,18 @@ function addSet(setL, collapsed) {
 			+'</div>'
 		+'</div>');
 
+	$('#set'+setL+' .setTitleEdit').val('Set'+setL);
+
 	$('#set'+setL+' #editDice').click(function() {
 		$(this).parents('.set').removeClass('readyMode').addClass('editMode');
 	})
 
 	$('#set'+setL+' #saveDice').click(function() {
 		$.removeCookie($(this).parents('.set').attr('id'));
-		var builtCookie = "";
+		var builtCookie = $(this).parents('.set').find('.setTitleEdit').val();
+		$(this).parents('.set').find('.setTitle').html(builtCookie);
 
+		builtCookie += '`';
 		var i = 1;
 		$($(this).parents('.set').find('.dieSet')).each(function() {
 			if (i > 1) {
@@ -159,7 +168,6 @@ function addDie(set, aCount, aType, aBonus, dCount, dType, diBonus, dtBonus) {
 
 	$('#set'+set+' .dieSet'+dieCount).append(''
 		+'<div class="damageDie'+dieCount+' damageDie clearfix">'
-			+'<div class="modBox editMode"></div>'
 			+'<div class="panel-body col-lg-6 readyMode">'
 				+'<span id="rdieCount">'+dCount+'</span> d '
 				+'<span id="rdieType">'+dType+'</span> + '
@@ -172,6 +180,7 @@ function addDie(set, aCount, aType, aBonus, dCount, dType, diBonus, dtBonus) {
 				+'<input id="iBonus" type="text"> + '
 				+'<input id="tBonus" type="text">'
 			+'</div>'
+			+'<div class="modBox editMode"></div>'
 			+'<div class="panel-body col-lg-12 editMode modPanel">'
 				+'<div class="col-lg-6"></div>'
 				+'<div class="col-lg-6"></div>'

@@ -16,6 +16,11 @@
 	z-index: 10;
 }
 
+#setBuilder .panel-heading .setTitleEdit {
+	width: 340px;
+	margin: -1px 0 -3px -2px;
+}
+
 #setBuilder .panel-heading button {
 	position: absolute;
 	top:0;
