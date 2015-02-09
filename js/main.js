@@ -72,9 +72,9 @@ function addSet(setL, collapsed) {
 				+'</div></a>'
 			+'</div>'
 			+'<div id="set'+setL+'Collapse" class="panel-body setContainer collapse'+text+'">'
-				+'<div class="dieContainer panel panel-default col-lg-12">'
-					+'<div class="panel-heading col-lg-6">Attack Rolls</div>'
-					+'<div class="panel-heading col-lg-6">Damage Rolls</div>'
+				+'<div class="dieContainer panel panel-default col-lg-12 col-sm-12">'
+					+'<div class="panel-heading col-lg-6 col-sm-6 col-xs-6">Attack Rolls</div>'
+					+'<div class="panel-heading col-lg-6 col-sm-6 col-xs-6">Damage Rolls</div>'
 				+'</div>'
 				+'<button id="editDice" class="btn btn-default pull-right readyMode">Edit</button>'
 				+'<button id="saveDice" class="btn btn-success pull-right editMode">Save</button>'
@@ -154,12 +154,12 @@ function addDie(set, aCount, aType, aBonus, dCount, dType, diBonus, dtBonus) {
 
 	$('#set'+set+' .dieSet'+dieCount).append(''
 		+'<div class="attackDie'+dieCount+' attackDie">'
-			+'<div class="panel-body col-lg-6 readyMode">'
+			+'<div class="panel-body col-lg-6 col-sm-6 col-xs-6 readyMode">'
 				+'<span id="ardieCount">'+aCount+'</span> d '
 				+'<span id="ardieType">'+aType+'</span> + '
 				+'<span id="ariBonus">'+aBonus+'</span>'
 			+'</div>'
-			+'<div class="panel-body col-lg-6 editMode">'
+			+'<div class="panel-body col-lg-6 col-sm-6 col-xs-6 editMode">'
 				+'<input id="adieCount" type="text"> d '
 				+'<input id="adieType" type="text"> + '
 				+'<input id="aiBonus" type="text">'
@@ -168,22 +168,22 @@ function addDie(set, aCount, aType, aBonus, dCount, dType, diBonus, dtBonus) {
 
 	$('#set'+set+' .dieSet'+dieCount).append(''
 		+'<div class="damageDie'+dieCount+' damageDie clearfix">'
-			+'<div class="panel-body col-lg-6 readyMode">'
-				+'<span id="rdieCount">'+dCount+'</span> d '
+			+'<div class="panel-body col-lg-6 col-sm-6 col-xs-6 readyMode">'
+				+'(<span id="rdieCount">'+dCount+'</span> d '
 				+'<span id="rdieType">'+dType+'</span> + '
-				+'<span id="riBonus">'+diBonus+'</span> + '
+				+'<span id="riBonus">'+diBonus+'</span>) + '
 				+'<span id="rtBonus">'+dtBonus+'</span>'
 			+'</div>'
-			+'<div class="panel-body col-lg-6 editMode">'
-				+'<input id="dieCount" type="text"> d '
+			+'<div class="panel-body col-lg-6 col-sm-6 col-xs-6 editMode">'
+				+'(<input id="dieCount" type="text"> d '
 				+'<input id="dieType" type="text"> + '
-				+'<input id="iBonus" type="text"> + '
+				+'<input id="iBonus" type="text">) + '
 				+'<input id="tBonus" type="text">'
 			+'</div>'
 			+'<div class="modBox editMode"></div>'
-			+'<div class="panel-body col-lg-12 editMode modPanel">'
-				+'<div class="col-lg-6"></div>'
-				+'<div class="col-lg-6"></div>'
+			+'<div class="panel-body col-lg-12 col-sm-12 editMode modPanel">'
+				+'<div class="col-lg-6 col-sm-6 col-xs-6"></div>'
+				+'<div class="col-lg-6 col-sm-6 col-xs-6"></div>'
 			+'</div>'
 		+'</div>');
 
@@ -304,7 +304,7 @@ function rollDamage() {
 		totalBonus = parseInt($('#'+currentSet+' .damageDie'+damageType+' #tBonus').val());
 			
 		if (individualBonus != 0) {
-			$('#bonusBreakdown').append('('+individualBonus);
+			$('#bonusBreakdown').append('+('+individualBonus);
 			if (dieCount > 1) {
 				$('#bonusBreakdown').append('x'+dieCount);
 			}
@@ -333,9 +333,9 @@ function rollDamage() {
 			$('#bonusBreakdown').append('+'+totalBonus);
 			finalResult += totalBonus;
 		}
-		$('#bonusBreakdown').append(')'+addSymbol);
-		if (j < $('.panel-success .attackHit').length) {
-			$('#bonusBreakdown').append('+');
+		if (individualBonus != 0) {
+			$('#bonusBreakdown').append(')'+addSymbol);
+			
 		}
 		j++;
 	});
