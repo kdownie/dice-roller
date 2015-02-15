@@ -22,10 +22,11 @@
 }
 
 #setBuilder .panel-heading button {
+	width: 170px;
 	position: absolute;
 	top:0;
 	right: 0;
-	padding: 9px 50px;
+	padding: 9px;
 	z-index: 5;
 }
 
@@ -84,8 +85,9 @@
 
 .dieContainer .dieSet .modBox {
 	width: 80px;
+	height: 28px;
 	position: absolute;
-	padding-top: 13px;
+	bottom: 13px;
 	right: 0;
 	display: block;
 	z-index: 10;
@@ -156,11 +158,11 @@
 	width: 100%;
 }
 
-#set1Collapse {
+.setContainer > .panel-body {
 	padding: 15px 15px 10px;
 }
 
-#set1Collapse > .panel {
+.setContainer .dieContainer {
 	margin-bottom: 10px;
 }
 

@@ -29,20 +29,20 @@
 					<div class="sets">
 					</div>
 					<div class="clearfix setOptions">
-						<button id="addSet" class="btn btn-default pull-right">Add Set</button>
+						<!--<button id="addDamageSet" class="btn btn-default pull-right">Add Spell</button>-->
+						<button id="addAttackSet" class="btn btn-default pull-right">Add Attack</button>
+						<button id="addRollSet" class="btn btn-default pull-right">Add Dice Roll</button>
 					</div>
 				</div>
 				<div id="resultsContainer" class="col-lg-6">
-					<div id="attackBreakdown" class="panel panel-default">
-						<div class="panel-heading">Attack Breakdown</div>
+					<div id="attackBreakdown" class="panel panel-default hide">
+						<div class="panel-heading">Attack Rolls</div>
 						<div class="panel-body">
-							<div id="attackRollContainer">
-
-							</div>
+							<div id="attackRollContainer"></div>
 						</div>
 					</div>
-					<div id="damageBreakdown" class="panel panel-default">
-						<div class="panel-heading">Damage Breakdown</div>
+					<div id="damageBreakdown" class="panel panel-default hide">
+						<div class="panel-heading">Damage</div>
 						<div class="panel-body">
 							<p class="lead"><span>Damage Rolls<span><br />
 							<span id="rollBreakdown">0</span>
@@ -62,16 +62,15 @@
 							Updates
 						</div>
 						<div class="panel-body">
-							<p>Set titles can now be editted and are saved in the site cookies.</p>
-							<p>Added the ability to delete full sets of die. May need to add confirmation box.</p>
-							<p>Multiple sets can now be created and rolled independently.</p>
+							<p>Added a new type of set, which is just a dice roll with no futher stages. This can be used for saving throws, initiative, etc.</p>
 						</div>
 						<div class="panel-heading">
 							What's Next
 						</div>
 						<div class="panel-body">
+							<p>Ability to add more die types to a single attack (ie Sneak Attack damage).</p>
+							<p>Being able to roll only damage (for spells).</p>
 							<p>Support for critical hits.</p>
-							<p>Being able to roll only damage (for spells) or only attacks (initiative, saving throw, etc).</p>
 						</div>
 					</div>
 				</div>
