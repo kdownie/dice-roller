@@ -10,6 +10,13 @@ $(document).ready(function() {
 	$('#addRollSet').click(function() {
 		var count = $('.set').length+1;
 		addRollSet(count, false);
+		addRollDie(count, 0, 0, 0);
+	});
+
+	$('#addDamageSet').click(function() {
+		var count = $('.set').length+1;
+		addDamageSet(count, false);
+		addDamageDie(count, 0, 0, 0, 0);
 	});
 });
 	
@@ -86,6 +93,20 @@ function addRollCookie(sections, i) {
 	});
 }
 
+function addDamageCookie(sections, i) {
+	$('#set'+i+' .setTitle').html(sections[0]);
+	$('#set'+i+' .setTitleEdit').val(sections[0]);
+
+	var die = sections[1].split(';');
+	var j = 1;
+	$.each(die, function() {
+		var dDie = die[j-1].split(',');
+		
+		addDamageDie(i, dDie[0], dDie[1], dDie[2], dDie[3]);
+		j++;
+	});
+}
+
 function addAttackSet(setL, collapsed) {
 	var text = '';
 	var cclass = ' collapsed';
@@ -148,7 +169,42 @@ function addRollSet(setL, collapsed) {
 	});
 
 	$('#set'+setL+' #addDice').click(function() {
-		addRollDie($(this).parents('.set').attr('id').substring(3), 0, 0, 0, 0, 0, 0, 0);
+		addRollDie($(this).parents('.set').attr('id').substring(3), 0, 0, 0);
+	});
+
+	$('#set'+setL+' .setActions .close').click(function() {
+		deleteSet(setL);
+	});
+}
+
+function addDamageSet(setL, collapsed) {
+	var text = '';
+	var cclass = ' collapsed';
+	var editMode = 'readyMode';
+	if (collapsed == false) {
+		text = ' in';
+		cclass = '';
+		editMode = 'editMode'
+	}
+	$('#setBuilder .sets').append(spitSetHTML(2, setL, text, cclass, editMode));
+
+	$('#set'+setL+' .setTitleEdit').val('Set'+setL);
+
+	$('#set'+setL+' #editDice').click(function() {
+		$(this).parents('.set').removeClass('readyMode').addClass('editMode');
+	})
+
+	$('#set'+setL+' #saveDice').click(function() {
+		var setId = $(this).parents('.set').attr('id');
+		saveSet(setId, 2);
+	})
+
+	$('#set'+setL+' #rollDice').click(function() {
+		rollDamage($(this).parents('.set').attr('id'));
+	});
+
+	$('#set'+setL+' #addDice').click(function() {
+		addDamageDie($(this).parents('.set').attr('id').substring(3), 0, 0, 0, 0);
 	});
 
 	$('#set'+setL+' .setActions .close').click(function() {
@@ -217,12 +273,11 @@ function deleteSet(set) {
 }
 
 function addAttackDie(set, aCount, aType, aBonus, dCount, dType, diBonus, dtBonus) {
-	var dieCount = $('#set'+set+' .attackDie').length+1;
+	var dieCount = $('#set'+set+' .dieSet').length+1;
 	$('#set'+set+' .dieContainer').append('<div class="clearfix panel panel-default dieSet dieSet'+dieCount+'"></div>');
 
 	var dieSet = $('#set'+set+' .dieSet'+dieCount);
 	dieSet.append(spitADHTML(0, 6, dieCount, aCount, aType, aBonus));
-
 	dieSet.append(spitDDHTML(0, 6, dieCount, dCount, dType, diBonus, dtBonus));
 
 	dieSet.append(spitModBoxHTML(dieCount));
@@ -246,7 +301,7 @@ function addAttackDie(set, aCount, aType, aBonus, dCount, dType, diBonus, dtBonu
 }
 
 function addRollDie(set, aCount, aType, aBonus) {
-	var dieCount = $('#set'+set+' .attackDie').length+1;
+	var dieCount = $('#set'+set+' .dieSet').length+1;
 	$('#set'+set+' .dieContainer').append('<div class="clearfix panel panel-default dieSet dieSet'+dieCount+'"></div>');
 
 	var dieSet = $('#set'+set+' .dieSet'+dieCount);
@@ -265,6 +320,29 @@ function addRollDie(set, aCount, aType, aBonus) {
 	$('#set'+set+' .attackDie'+dieCount+' #adieCount').val(aCount);
 	$('#set'+set+' .attackDie'+dieCount+' #adieType').val(aType);
 	$('#set'+set+' .attackDie'+dieCount+' #aiBonus').val(aBonus);
+}
+
+function addDamageDie(set, dCount, dType, diBonus, dtBonus) {
+	var dieCount = $('#set'+set+' .damageDie').length+1;
+	$('#set'+set+' .dieContainer').append('<div class="clearfix panel panel-default dieSet dieSet'+dieCount+'"></div>');
+
+	var dieSet = $('#set'+set+' .dieSet'+dieCount);
+	dieSet.append(spitDDHTML(2, 12, dieCount, dCount, dType, diBonus, dtBonus));
+
+	dieSet.append(spitModBoxHTML(dieCount));
+
+	$('#set'+set+' .dieSet'+dieCount+' .editAdvanced').click(function() {
+		$(this).parent().siblings('.modPanel').toggleClass('active');
+	});
+
+	$('#set'+set+' .dieSet'+dieCount+' .close').click(function() {
+		$('.dieSet'+$(this).attr('id').substring(5)).remove();
+	});
+
+	$('#set'+set+' .damageDie'+dieCount+' #dieCount').val(dCount);
+	$('#set'+set+' .damageDie'+dieCount+' #dieType').val(dType);
+	$('#set'+set+' .damageDie'+dieCount+' #iBonus').val(diBonus);
+	$('#set'+set+' .damageDie'+dieCount+' #tBonus').val(dtBonus);
 }
 
 function updateDiceValues(set) {
@@ -311,7 +389,7 @@ function rollAttack(set) {
 				+'<button id="attackMiss'+j+'" class="attackMiss btn btn-danger pull-right">Miss</button>');
 
 			setDamageEvent('#attackRoll'+j+' #attackHit'+j, '#attackRoll'+j, 'panel-success');
-			setMissEvent('#attackRoll'+j+' #attackMiss'+j, '#attackRoll'+j, 'panel-danger')
+			setMissEvent('#attackRoll'+j+' #attackMiss'+j, '#attackRoll'+j, 'panel-danger');
 			j++;
 		}
 		k++;
@@ -352,6 +430,27 @@ function rollDice(set) {
 
 	$('#attackBreakdown').removeClass('hide');
 	$('#damageBreakdown').addClass('hide');
+}
+
+function rollDamage(set) {
+	currentSet = set;
+	$('#attackBreakdown').addClass('hide');
+
+	$('#attackRollContainer').html('');
+	
+	var j = 1;
+	var k = 1;
+	$('#'+set+' .dieSet').each(function() {
+			$('#attackRollContainer').append('<div id="attackRoll'+j+'" class="panel panel-success" data-damageType="'+k+'"></div>');
+
+			var cont = $($('#attackRollContainer').children()[j-1]);
+			cont.append('<div class="panel-body attackHit"></div>');
+			j++;
+		k++;
+	});
+
+	$('#damageBreakdown').addClass('hide');
+	rollAttackDamage();
 }
 
 function setDamageEvent(target, container, add) {
@@ -434,8 +533,6 @@ function rollAttackDamage() {
 	$('#damageBreakdown').removeClass('hide');
 	$('#result').html(''+finalResult);
 }
-
-
 
 function spitSetHTML(setType, setL, text, cclass, editMode) {
 	var diceHTML = '';
